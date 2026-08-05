@@ -391,8 +391,8 @@ function Users() {
       >
         <Box sx={{ width: '100%', height: 500 }}>
           {isLoading ? (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-              <InfinityLoader size={90} text="Loading user data..." />
+            <Box display="flex" justifyContent="center" alignItems="center" height="100%" sx={{ backgroundColor: '#0b0f19' }}>
+              <InfinityLoader size={110} text="Loading user data..." />
             </Box>
           ) : error ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">

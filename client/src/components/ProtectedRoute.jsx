@@ -8,18 +8,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
   const { isAuthenticated, isLoading, user } = useSelector((state) => state.auth);
 
   if (isLoading) {
-    return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        sx={{ backgroundColor: '#f8fafc' }}
-      >
-        <InfinityLoader size={120} text="Verifying session..." />
-      </Box>
-    );
+    return <InfinityLoader fullScreen={true} size={140} text="Verifying session..." />;
   }
 
   if (!isAuthenticated) {

@@ -70,8 +70,8 @@ function Settings() {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-        <InfinityLoader size={100} text="Loading system settings..." />
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" sx={{ backgroundColor: '#0b0f19', borderRadius: 3, p: 4 }}>
+        <InfinityLoader size={120} text="Loading system settings..." />
       </Box>
     );
   }

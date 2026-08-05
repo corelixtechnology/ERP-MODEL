@@ -46,17 +46,7 @@ function AppContent() {
   }, [dispatch]);
 
   if (isLoading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        sx={{ backgroundColor: '#f8fafc' }}
-      >
-        <InfinityLoader size={120} text="Loading College ERP..." />
-      </Box>
-    );
+    return <InfinityLoader fullScreen={true} size={140} text="Loading College ERP..." />;
   }
 
   return (

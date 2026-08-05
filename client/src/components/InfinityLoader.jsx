@@ -2,13 +2,14 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 const InfinityLoader = ({
-  size = 120,
+  size = 130,
   color = '#00e5ff',
   trackColor = '#181829',
   strokeWidth = 15,
   speed = 1.8,
   text = '',
-  textColor = '#475569',
+  textColor = '#94a3b8',
+  fullScreen = false,
 }) => {
   // SVG viewBox is 200 x 100 (2:1 aspect ratio)
   const width = size;
@@ -16,8 +17,13 @@ const InfinityLoader = ({
 
   const pathD = "M 100,50 C 70,10 20,10 20,50 C 20,90 70,90 100,50 C 130,10 180,10 180,50 C 180,90 130,90 100,50 Z";
 
-  return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+  const loaderContent = (
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
       <style>{`
         @keyframes infinityDash {
           0% {
@@ -34,7 +40,10 @@ const InfinityLoader = ({
         viewBox="0 0 200 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ display: 'block' }}
+        style={{
+          display: 'block',
+          filter: 'drop-shadow(0px 0px 8px rgba(0, 229, 255, 0.4))',
+        }}
       >
         {/* Background dark track */}
         <path
@@ -61,17 +70,55 @@ const InfinityLoader = ({
       </svg>
       {text && (
         <Typography
-          variant="body2"
+          variant="body1"
           sx={{
-            mt: 2,
+            mt: 2.5,
             color: textColor,
-            fontWeight: 500,
-            letterSpacing: '0.3px',
+            fontWeight: 600,
+            letterSpacing: '0.5px',
+            fontSize: '0.95rem',
+            textAlign: 'center',
           }}
         >
           {text}
         </Typography>
       )}
+    </Box>
+  );
+
+  if (fullScreen) {
+    return (
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: '#0b0f19',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 99999,
+        }}
+      >
+        {loaderContent}
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        height: '100%',
+        minHeight: '200px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {loaderContent}
     </Box>
   );
 };

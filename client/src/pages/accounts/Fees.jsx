@@ -226,8 +226,8 @@ const AccountsFees = () => {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
-        <InfinityLoader size={100} text="Loading student fee records..." />
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh" sx={{ backgroundColor: '#0b0f19', borderRadius: 3, p: 4 }}>
+        <InfinityLoader size={120} text="Loading student fee records..." />
       </Box>
     );
   }
