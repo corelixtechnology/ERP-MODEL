@@ -80,15 +80,15 @@ const clientBuildPath = path.join(__dirname, '../client/dist');
 app.use(express.static(clientBuildPath));
 
 // SPA Fallback: Send index.html for non-API GET requests on page refresh/reload
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) {
-    return next();
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api')) {
+    return res.sendFile(path.join(clientBuildPath, 'index.html'), (err) => {
+      if (err) {
+        next();
+      }
+    });
   }
-  res.sendFile(path.join(clientBuildPath, 'index.html'), (err) => {
-    if (err) {
-      next();
-    }
-  });
+  next();
 });
 
 // 404 Route handler for unhandled routes
