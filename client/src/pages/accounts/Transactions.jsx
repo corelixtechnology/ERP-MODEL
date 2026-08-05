@@ -1,4 +1,5 @@
 import React from 'react';
+import InfinityLoader from '../../components/InfinityLoader';
 import { useGetFeeTransactionsQuery } from '../../features/feesApi';
 import {
   Box,
@@ -104,7 +105,7 @@ const AccountsTransactions = () => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
-        <CircularProgress size={50} thickness={4} sx={{ color: '#0ea5e9' }} />
+        <InfinityLoader size={100} text="Loading transactions ledger..." />
       </Box>
     );
   }

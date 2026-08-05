@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGetDashboardStatsQuery } from '../../features/adminApi';
+import InfinityLoader from '../../components/InfinityLoader';
 import {
   Box,
   Grid,
@@ -13,7 +14,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  CircularProgress,
   Alert,
   Avatar,
   IconButton,
@@ -46,7 +46,7 @@ function Dashboard() {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
-        <CircularProgress size={50} thickness={4} sx={{ color: '#0ea5e9' }} />
+        <InfinityLoader size={100} text="Loading Dashboard Metrics..." />
       </Box>
     );
   }

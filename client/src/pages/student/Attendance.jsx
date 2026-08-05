@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InfinityLoader from '../../components/InfinityLoader';
 import { useGetAttendanceQuery } from '../../features/attendanceApi';
 import {
   Box,
@@ -96,7 +97,7 @@ const StudentAttendance = () => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
-        <CircularProgress size={50} thickness={4} sx={{ color: '#0ea5e9' }} />
+        <InfinityLoader size={100} text="Loading attendance stats..." />
       </Box>
     );
   }

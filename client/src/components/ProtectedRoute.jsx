@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { CircularProgress, Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import InfinityLoader from './InfinityLoader';
 
 const ProtectedRoute = ({ allowedRoles }) => {
   const { isAuthenticated, isLoading, user } = useSelector((state) => state.auth);
@@ -16,10 +17,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
         minHeight="100vh"
         sx={{ backgroundColor: '#f8fafc' }}
       >
-        <CircularProgress size={60} thickness={4} sx={{ color: '#4f46e5' }} />
-        <Typography variant="body1" sx={{ mt: 2, color: '#475569', fontWeight: 500 }}>
-          Verifying session...
-        </Typography>
+        <InfinityLoader size={120} text="Verifying session..." />
       </Box>
     );
   }

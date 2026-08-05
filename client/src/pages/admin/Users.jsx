@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InfinityLoader from '../../components/InfinityLoader';
 import {
   useGetUsersQuery,
   useCreateUserMutation,
@@ -391,7 +392,7 @@ function Users() {
         <Box sx={{ width: '100%', height: 500 }}>
           {isLoading ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-              <CircularProgress size={45} thickness={4} sx={{ color: '#0ea5e9' }} />
+              <InfinityLoader size={90} text="Loading user data..." />
             </Box>
           ) : error ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">

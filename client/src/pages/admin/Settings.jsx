@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import InfinityLoader from '../../components/InfinityLoader';
 import {
   useGetSystemSettingsQuery,
   useUpdateSystemSettingsMutation,
@@ -26,42 +27,43 @@ function Settings() {
   // Local Form State
   const [formData, setFormData] = useState({
     collegeName: '',
-    sessionYear: '',
-    attendanceThreshold: 75,
+    academicYear: '',
+    contactEmail: '',
+    contactPhone: '',
+    address: '',
   });
 
-  const [alertMsg, setAlertMsg] = useState({ type: '', text: '' });
+  const [feedback, setFeedback] = useState({ type: '', message: '' });
 
   // Sync query data to local state
   useEffect(() => {
-    if (settingsData) {
+    if (settingsData?.settings) {
       setFormData({
-        collegeName: settingsData.collegeName,
-        sessionYear: settingsData.sessionYear,
-        attendanceThreshold: settingsData.attendanceThreshold,
+        collegeName: settingsData.settings.collegeName || '',
+        academicYear: settingsData.settings.academicYear || '',
+        contactEmail: settingsData.settings.contactEmail || '',
+        contactPhone: settingsData.settings.contactPhone || '',
+        address: settingsData.settings.address || '',
       });
     }
   }, [settingsData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === 'attendanceThreshold' ? Number(value) : value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setAlertMsg({ type: '', text: '' });
+    setFeedback({ type: '', message: '' });
 
     try {
       await updateSystemSettings(formData).unwrap();
-      setAlertMsg({ type: 'success', text: 'System configurations updated successfully!' });
+      setFeedback({ type: 'success', message: 'System settings updated successfully!' });
     } catch (err) {
-      setAlertMsg({
+      setFeedback({
         type: 'error',
-        text: err.data?.message || 'Failed to update system configurations.',
+        message: err.data?.message || 'Failed to update settings. Please try again.',
       });
     }
   };
@@ -69,7 +71,7 @@ function Settings() {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-        <CircularProgress size={50} thickness={4} sx={{ color: '#0ea5e9' }} />
+        <InfinityLoader size={100} text="Loading system settings..." />
       </Box>
     );
   }

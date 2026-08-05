@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Box, CircularProgress } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 import theme from './theme';
 import { loadUser } from './features/authSlice';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
+import InfinityLoader from './components/InfinityLoader';
 
 // Pages
 import Login from './pages/Login';
@@ -53,7 +54,7 @@ function AppContent() {
         minHeight="100vh"
         sx={{ backgroundColor: '#f8fafc' }}
       >
-        <CircularProgress size={60} thickness={4} sx={{ color: '#4f46e5' }} />
+        <InfinityLoader size={120} text="Loading College ERP..." />
       </Box>
     );
   }

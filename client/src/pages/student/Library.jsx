@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InfinityLoader from '../../components/InfinityLoader';
 import { useGetLibraryBooksQuery } from '../../features/libraryApi';
 import {
   Box,
@@ -78,7 +79,7 @@ const StudentLibrary = () => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
-        <CircularProgress size={50} thickness={4} sx={{ color: '#0ea5e9' }} />
+        <InfinityLoader size={100} text="Loading library catalog..." />
       </Box>
     );
   }
