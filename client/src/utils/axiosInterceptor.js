@@ -13,6 +13,18 @@ const api = axios.create({
   },
 });
 
+// Request interceptor to attach Bearer token if stored in localStorage
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Response interceptor to catch 401 errors (unauthorized) and redirect or handle logout
 api.interceptors.response.use(
   (response) => response,

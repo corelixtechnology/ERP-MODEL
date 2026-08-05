@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     }
 
     // Generate token and set HTTP-only cookie
-    generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(res, user._id);
 
     res.status(200).json({
       _id: user._id,
@@ -42,6 +42,7 @@ export const login = async (req, res) => {
       role: user.role,
       profilePic: user.profilePic,
       isActive: user.isActive,
+      token,
     });
   } catch (error) {
     console.error(`Login error: ${error.message}`);

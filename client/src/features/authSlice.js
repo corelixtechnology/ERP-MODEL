@@ -71,12 +71,16 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload;
         state.error = null;
+        if (action.payload?.token) {
+          localStorage.setItem('token', action.payload.token);
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;
         state.error = action.payload;
+        localStorage.removeItem('token');
       })
       
       // Logout User
@@ -88,10 +92,12 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.error = null;
+        localStorage.removeItem('token');
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        localStorage.removeItem('token');
       })
 
       // Load User (Verify session on refresh)
@@ -109,7 +115,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;
-        // Don't show load error to user on page load
+        localStorage.removeItem('token');
       });
   },
 });
