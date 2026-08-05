@@ -27,43 +27,42 @@ function Settings() {
   // Local Form State
   const [formData, setFormData] = useState({
     collegeName: '',
-    academicYear: '',
-    contactEmail: '',
-    contactPhone: '',
-    address: '',
+    sessionYear: '',
+    attendanceThreshold: 75,
   });
 
-  const [feedback, setFeedback] = useState({ type: '', message: '' });
+  const [alertMsg, setAlertMsg] = useState({ type: '', text: '' });
 
   // Sync query data to local state
   useEffect(() => {
-    if (settingsData?.settings) {
+    if (settingsData) {
       setFormData({
-        collegeName: settingsData.settings.collegeName || '',
-        academicYear: settingsData.settings.academicYear || '',
-        contactEmail: settingsData.settings.contactEmail || '',
-        contactPhone: settingsData.settings.contactPhone || '',
-        address: settingsData.settings.address || '',
+        collegeName: settingsData.collegeName || '',
+        sessionYear: settingsData.sessionYear || '',
+        attendanceThreshold: settingsData.attendanceThreshold ?? 75,
       });
     }
   }, [settingsData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'attendanceThreshold' ? Number(value) : value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFeedback({ type: '', message: '' });
+    setAlertMsg({ type: '', text: '' });
 
     try {
       await updateSystemSettings(formData).unwrap();
-      setFeedback({ type: 'success', message: 'System settings updated successfully!' });
+      setAlertMsg({ type: 'success', text: 'System configurations updated successfully!' });
     } catch (err) {
-      setFeedback({
+      setAlertMsg({
         type: 'error',
-        message: err.data?.message || 'Failed to update settings. Please try again.',
+        text: err.data?.message || 'Failed to update system configurations.',
       });
     }
   };
@@ -202,4 +201,3 @@ function Settings() {
 }
 
 export default Settings;
-export { Settings };
