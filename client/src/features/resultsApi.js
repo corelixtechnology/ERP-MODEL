@@ -1,11 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { dynamicBaseQuery } from '../utils/baseQuery.js';
 
 export const resultsApi = createApi({
   reducerPath: 'resultsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1',
-    credentials: 'include',
-  }),
+  baseQuery: dynamicBaseQuery,
   tagTypes: ['Marks', 'Exams'],
   endpoints: (builder) => ({
     getMarks: builder.query({

@@ -1,11 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { dynamicBaseQuery } from '../utils/baseQuery.js';
 
 export const adminApi = createApi({
   reducerPath: 'adminApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1',
-    credentials: 'include', // Crucial for cookie transmission
-  }),
+  baseQuery: dynamicBaseQuery,
   tagTypes: ['DashboardStats', 'Users', 'Courses', 'Settings', 'Faculty'],
   endpoints: (builder) => ({
     getDashboardStats: builder.query({
