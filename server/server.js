@@ -58,6 +58,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Base Route
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to the College ERP API' });
@@ -69,7 +75,23 @@ app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/erp', erpRoutes);
 app.use('/api/v1/fees', feeRoutes);
 
-// 404 Route handler
+// Serve Client Static Build Files (if available)
+const clientBuildPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientBuildPath));
+
+// SPA Fallback: Send index.html for non-API GET requests on page refresh/reload
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(clientBuildPath, 'index.html'), (err) => {
+    if (err) {
+      next();
+    }
+  });
+});
+
+// 404 Route handler for unhandled routes
 app.use((req, res) => {
   res.status(404).json({ message: 'Resource not found' });
 });
